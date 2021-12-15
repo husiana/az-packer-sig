@@ -22,21 +22,6 @@ if [ "$RG" == "" ]; then
   az group create -n $imageResourceGroup -l $location
 fi
 
-#/usr/bin/packer build -force \
-## To be used with SPN :
-#	-var "subscription_id=$subscriptionID" \          # "subscription_id": "{{user `subscription_id`}}",
-#	-var "client_id=$servicePrincipalAppId" \         # "client_id": "{{user `client_id`}}",
-#	-var "client_secret=$servicePrincipalPassword" \  # "client_secret": "{{user `client_secret`}}",
-#	-var "tenant_id=$servicePrincipalTenant" \        # "tenant_id": "{{user `tenant_id`}}",
-## To be used with Managed Identity or azlogin :
-#  -var "var_use_azure_cli_auth=true" \              # "use_azure_cli_auth": "{{user `var_use_azure_cli_auth`}}",
-## Other parameters
-#  -var "location=$location" \
-#	-var "var_resource_group=$imageResourceGroup" \
-#	-var "var_image=$image_name" \
-#	-var "var_img_version=$version" \
-#	-var "var_cloud_env=$cloud_env" azhop-centos79-v2-rdma-gpgpu.json
-
 /usr/bin/packer build -force \
   -var "var_use_azure_cli_auth=true" \
   -var "location=$location" \
