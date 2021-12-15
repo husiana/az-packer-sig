@@ -12,10 +12,7 @@ source variables.sh
 ## Check if Packer is alright :
 
 packerver=$( /usr/bin/packer -v )
-
-if [ "$packerver" >= 1.7 ]; then
-  echo Packer version is alright : $packerver
-fi
+echo Packer version right : $packerver
 
 ## Creating RG to store SIG if it doesn't exist yet :
 
