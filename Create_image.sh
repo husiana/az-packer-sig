@@ -1,19 +1,32 @@
 #!/bin/bash
 
-# First please login with az login
-# Second, create the right resource group with az group create
-# third, have an spn handy and fill up variables
+# First please login with az login -i if managed identity is used on CChead
+# Second, create the right resource group with az group create - done by the script
+# third, have an spn handy and fill up variables if needed, you can use managed ID's instead
 # Fourth, run this script
 
 FORCE=0
 
 source variables.sh
 
-packer build -force -var "location=$location" \
-	-var "subscription_id=$subscriptionID" \
-	-var "client_id=$servicePrincipalAppId" \
-	-var "client_secret=$servicePrincipalPassword" \
-	-var "tenant_id=$servicePrincipalTenant" \
+## Creating RG to store SIG if it doesn't exist yet :
+
+RG=$(az group list | grep $imageResourceGroup)
+
+if [ "$RG" == "" ]; then
+  az group create -n $imageResourceGroup -l $location
+fi
+
+packer build -force \
+## To be used with SPN :
+#	-var "subscription_id=$subscriptionID" \          # "subscription_id": "{{user `subscription_id`}}",
+#	-var "client_id=$servicePrincipalAppId" \         # "client_id": "{{user `client_id`}}",
+#	-var "client_secret=$servicePrincipalPassword" \  # "client_secret": "{{user `client_secret`}}",
+#	-var "tenant_id=$servicePrincipalTenant" \        # "tenant_id": "{{user `tenant_id`}}",
+## To be used with Managed Identity or azlogin :
+  -var "var_use_azure_cli_auth=true" \              # "use_azure_cli_auth": "{{user `var_use_azure_cli_auth`}}",
+## Other parameters
+  -var "location=$location" \
 	-var "var_resource_group=$imageResourceGroup" \
 	-var "var_image=$image_name" \
 	-var "var_img_version=$version" \

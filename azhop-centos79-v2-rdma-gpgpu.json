@@ -2,10 +2,7 @@
     "builders": [
         {
             "type": "azure-arm",
-	        "client_id": "{{user `client_id`}}",
-	        "client_secret": "{{user `client_secret`}}",
-		    "tenant_id": "{{user `tenant_id`}}",
-            "subscription_id": "{{user `subscription_id`}}",
+            "use_azure_cli_auth": "{{user `var_use_azure_cli_auth`}}",
             "image_publisher": "OpenLogic",
             "image_offer": "CentOS-HPC",
             "image_sku": "7_9-gen2",

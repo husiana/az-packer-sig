@@ -1,14 +1,14 @@
 # Destination image resource group
-imageResourceGroup=""
+imageResourceGroup="DemoImages"
 
 # Location (see possible locations in main docs)
-location=""
+location="westeurope"
 
 # Gallery Name & image infos
-GalleryName=""
-image_name=""
+GalleryName="cycleimages"
+image_name="azhop-centos79-v2-rdma-gpgpu"
 cloud_env="public"
-publisher=""
+publisher="democycle"
 # Example with Centos7.9 gen2 version :
 offer="CentOS"
 sku="7.9-gen2"
