@@ -1,5 +1,5 @@
 #!/bin/bash
-
+# Before first : Install PACKER !!! : https://learn.hashicorp.com/tutorials/packer/get-started-install-cli?in=packer/docker-get-started
 # First please login with az login -i if managed identity is used on CChead
 # Second, create the right resource group with az group create - done by the script
 # third, have an spn handy and fill up variables if needed, you can use managed ID's instead
@@ -9,6 +9,14 @@ FORCE=0
 
 source variables.sh
 
+## Check if Packer is alright :
+
+packerver=$( /usr/bin/packer -v )
+
+if [ "$packerver" >= 1.7 ]; then
+  echo Packer version is alright : $packerver
+fi
+
 ## Creating RG to store SIG if it doesn't exist yet :
 
 RG=$(az group list | grep $imageResourceGroup)
@@ -17,7 +25,7 @@ if [ "$RG" == "" ]; then
   az group create -n $imageResourceGroup -l $location
 fi
 
-packer build -force \
+/usr/bin/packer build -force \
 ## To be used with SPN :
 #	-var "subscription_id=$subscriptionID" \          # "subscription_id": "{{user `subscription_id`}}",
 #	-var "client_id=$servicePrincipalAppId" \         # "client_id": "{{user `client_id`}}",
